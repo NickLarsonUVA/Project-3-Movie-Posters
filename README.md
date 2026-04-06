@@ -4,35 +4,19 @@
 
 # Project Overview
 
-This project investigates whether Bitcoin behaves as an inflation-sensitive asset by analyzing the relationship between Bitcoin returns, CPI inflation, and inflation expectations. Using a Vector Autoregression or VAR model, we examine whether inflation shocks produce measurable short term or long term effects on Bitcoin prices.
+This project uses machine learning to analyze movie posters alongside economic data, ratings, and box office revenue to see if visual features can help predict movie genre and performance. Poster images are converted into numerical features and combined with structured movie data to train classification and regression models. The goal is to evaluate whether visual marketing and economic factors together can explain movie success.
 
 # Research Question
 
-Does Bitcoin respond positively to increases in inflation and inflation expectations, and are these responses short-term or persistent over time?
+To what degree can computer vision models accurately classify movie genres, ratings, and box office performance from poster images?
 
 # Modeling Approach
 
-We use a Vector Autoregression (VAR) time series model including:
 
-Bitcoin returns
-CPI inflation (year-over-year change)
-5-Year Breakeven Inflation Rate
-S&P 500 returns (control variable) Impulse Response Functions were used to analyze how Bitcoin responds to inflation shocks over time.
-Repository Contents
 
-Project-2-Bitcoin/
+# Section 1: Software and Platform
 
-README.md LICENSE.md
-
-DATA/ CPIAUCSL.csv T5YIE.csv btc-usd-max.csv master_dataset_daily.csv master_dataset_monthly.csv
-
-SCRIPTS/ eda.ipynb
-
-OUTPUT/ growth_chart.png
-
-Section 1: Software and Platform
-
-Software Used:
+# Software Used:
 
 Jupyter Notebook / Google Colab
 Python Packages Required Install before running: -pandas -numpy -matplotlib -statsmodels -scipy -seaborn Install with: -pip install pandas numpy matplotlib statsmodels scipy seaborn
@@ -58,16 +42,16 @@ Our workflow follows: Data Collection → Data Cleaning → Stationarity Testing
 
 # Quantifiable Goal
 
-This project will be considered successful to us if we can determine whether Bitcoin responds significantly to inflation changes and whether those effects are temporary or persistent.
+
 
 # References
 
-[1] CoinGecko Bitcoin Historical Data [2] Bureau of Labor Statistics CPI Data [3] Federal Reserve Economic Data (FRED) [4] MathWorks VAR Model Documentation [5] Choi & Shin (2022) Bitcoin Inflation Hedge Study
+Need to add to this
 
-Authors
+# Authors
 
 DS 4002 NBA All Stars Group: Bowen Slingluff Nick Larson Andrew Patterson University of Virginia DS 4002 – Data Science Project Lifecycle Spring 2026
 
-License
+# License
 
 This project uses the MIT License.
