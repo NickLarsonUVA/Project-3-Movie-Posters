@@ -82,11 +82,12 @@ This project leverages **transfer learning** using the **ResNet-50** architectur
 
 ## Instructions to Reproduce Results
 
-1.  **Download the Datasets:** Ensure data from Hugging Face, BLS (CPI), and TMDB are located in the `DATA` folder.
-2.  **Environment Setup:** Open `eda.ipynb` (or the respective modeling notebook) in Jupyter Notebook or your preferred IDE. Connect to Rivanna if processing the full 42GB dataset.
-3.  **Run Cells:** Run all notebook cells from top to bottom.
-4.  **Processing:** The notebook will clean the data, resize images to 224x224, adjust for CPI inflation, and train the ResNet-50 models.
-5.  **Outputs:** All evaluation metrics, F1-scores, error comparisons (MAE/RMSE) against the dummy baseline, and generated figures will appear in the `OUTPUT` folder.
+1.  **Download Local Datasets:** Download `raw_movie_data.csv` and the original CPI-U dataset, and place both files directly into the `DATA` folder.
+2.  **API and Cloud Data Setup:** You will need an active TMDB API key to fetch the supplementary movie metadata. The 42GB poster image dataset is pulled dynamically from Hugging Face directly within the code, so no manual downloading is required for the images.
+3.  **Environment Setup:** Due to the massive size of the image dataset, local processing is not feasible. You must connect to a high-performance computing environment (such as UVA's Rivanna HPC) and allocate GPU nodes. Open `eda.ipynb` (or the respective modeling notebook) within this environment. 
+4.  **Run Cells:** Run all notebook cells from top to bottom.
+5.  **Processing:** The notebook will automatically pull the Hugging Face images and TMDB API data, clean the merged dataset, resize all posters to 224x224 pixels, adjust revenue for CPI inflation, and train the ResNet-50 models.
+6.  **Outputs:** All evaluation metrics, F1-scores, error comparisons (MAE/RMSE) against the dummy baseline, and generated figures will appear in the `OUTPUT` folder.
 
 ---
 
