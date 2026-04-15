@@ -2,7 +2,7 @@
 
 **DS 4002: NBA All Stars** **Authors:** Nick Larson, Bowen Slingluff, Andrew Patterson  
 **Date:** April 12, 2026  
-**University of Virginia** ---
+**University of Virginia**
 
 ## Executive Summary
 This document outlines the data collection and analytical approach for a study evaluating whether a computer model can accurately guess a movie’s genre, ratings, and box office performance solely based on its poster image. By converting poster images into numerical features and combining them with structured movie and economic data, we aim to evaluate whether visual marketing and economic factors together can explain a movie's financial and critical success.
