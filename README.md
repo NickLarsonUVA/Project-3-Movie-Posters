@@ -1,7 +1,7 @@
 # Movie Poster Data Analysis Project 3
 
 **DS 4002: NBA All Stars** **Authors:** Nick Larson, Bowen Slingluff, Andrew Patterson  
-**Date:** April 12, 2026  
+**Date:** April 15, 2026  
 **University of Virginia**
 
 ## Executive Summary
