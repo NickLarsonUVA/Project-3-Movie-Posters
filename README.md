@@ -20,9 +20,7 @@ This document outlines the data collection and analytical approach for a study e
 
 ## Dataset Establishment
 
-Our dataset consists of movie metadata and poster image data from The Movie Database (TMDB), downloaded from a pre-made Hugging Face dataset. Because of the massive 42-gigabyte footprint of our raw poster data, we will load this data into our scripts programmatically using the University of Virginia's high-performance computer, Rivanna. 
-
-We map low-level visual features (colors, textures, composition) to high-level metadata using the `id` as the primary key. A minimum threshold on `vote_count` is applied to prevent movies with very few ratings from skewing the results. Furthermore, release date serves as a control variable to normalize shifting visual aesthetic trends over time.
+Our dataset consists of movie metadata and poster image data from The Movie Database (TMDB), downloaded from a pre-made Hugging Face dataset. **Instead of downloading the massive 42-gigabyte raw dataset all at once, we utilize Hugging Face's streaming API to dynamically pull data.** We map low-level visual features (colors, textures, composition) to high-level metadata using the `id` as the primary key. **To ensure data quality, we apply strict filtering during the collection phase, dropping any movies that lack genre tags or report $0 in box office revenue, ultimately capping our dataset at a representative sample of 10,000 movies.** Furthermore, release date serves as a control variable to normalize shifting visual aesthetic trends over time.
 
 ### Data Dictionary
 
@@ -32,7 +30,9 @@ We map low-level visual features (colors, textures, composition) to high-level m
 | `title` | The official display name of the movie. | `Barbie` |
 | `genres` | A JSON List of objects representing the movie's categories with genre ID and name. | `[{"id": 35, "name": "Comedy"}]` |
 | `release_date` | The date the movie was first released in theaters (YYYY-MM-DD). | `2023-07-19` |
+| **`release_year`** | **The parsed year of the movie's release, used for CPI lookups.** | **`2023`** |
 | `revenue` | The total worldwide box office gross in USD (primary regression target). | `1434628000` |
+| **`revenue_adj`** | **The inflation-adjusted worldwide box office gross (Base Year: 2026), which is log-transformed during modeling.** | **`6.110814e+08`** |
 | `vote_average` | A 0–10 scale representing the average rating given by TMDB users. | `6.56` |
 | `vote_count` | The total number of TMDB users who have submitted a rating. | `10937` |
 | `image` | The raw pixel data or file path to the movie poster. | *(Image Path/Data)* |
@@ -50,7 +50,7 @@ We map low-level visual features (colors, textures, composition) to high-level m
 
 ### 2. Preprocessing
 All data wrangling and image processing will be conducted using the GPU nodes on Rivanna. 
-* **Merge & Normalize:** Merge the image dataset with secondary financial and TMDB ratings datasets using the unique TMDB ID. Revenue is adjusted for inflation utilizing Consumer Price Index (CPI) data based on each film’s release date.
+* **Merge & Normalize:** Merge the image dataset with secondary financial and TMDB ratings datasets using the unique TMDB ID. Revenue is adjusted for inflation utilizing Consumer Price Index (CPI) data based on each film’s release **year, benchmarked to 2026 dollars**. **Because revenue distributions are highly skewed, the adjusted revenue is also log-transformed (`np.log1p`) before being fed into the regression model.**
 * **Image Standardization:** All movie posters will be standardized to a uniform resolution (224x224 pixels).
 * **Data Cleaning:** The target variables will be cleaned, genre lists will be one-hot encoded for multi-label classification, continuous variables scaled, and any records with missing images, corrupted data, or insufficient vote counts will be dropped.
 
@@ -71,11 +71,14 @@ This project leverages **transfer learning** using the **ResNet-50** architectur
 **OS:** MacOS, Linux (HPC)  
 
 **Required Python Packages:**
-*(Install before running via `pip install pandas numpy matplotlib statsmodels scipy seaborn`)*
+*(Install before running via `pip install pandas numpy matplotlib statsmodels scipy seaborn scikit-learn datasets huggingface_hub ratelimit tqdm pillow`)*
 * `pandas`
 * `numpy`
 * `matplotlib` & `seaborn`
 * `statsmodels` & `scipy`
+* `scikit-learn`
+* `datasets` & `huggingface_hub`
+* `pillow`
 * *Note: Deep learning libraries (e.g., PyTorch or TensorFlow) are required for ResNet-50 processing.*
 
 ---
@@ -83,10 +86,10 @@ This project leverages **transfer learning** using the **ResNet-50** architectur
 ## Instructions to Reproduce Results
 
 1.  **Download Local Datasets:** Download `raw_movie_data.csv` and the original CPI-U dataset, and place both files directly into the `DATA` folder.
-2.  **API and Cloud Data Setup:** You will need an active TMDB API key to fetch the supplementary movie metadata. The 42GB poster image dataset is pulled dynamically from Hugging Face directly within the code, so no manual downloading is required for the images.
+2.  **API and Cloud Data Setup:** You will need an active TMDB API key to fetch the supplementary movie metadata. The **poster image dataset is streamed dynamically from Hugging Face directly within the code, which evaluates and downloads exactly 10,000 valid images to a local `./posters` directory (~491MB footprint)**, so no manual downloading of the 42GB raw file is required.
 3.  **Environment Setup:** Due to the massive size of the image dataset, local processing is not feasible. You must connect to a high-performance computing environment (such as UVA's Rivanna HPC) and allocate GPU nodes. Open `plots.ipynb` (or the respective modeling notebook) within this environment. 
 4.  **Run Cells:** Run all notebook cells from top to bottom.
-5.  **Processing:** The notebook will automatically pull the Hugging Face images and TMDB API data, clean the merged dataset, resize all posters to 224x224 pixels, adjust revenue for CPI inflation, and train the ResNet-50 models.
+5.  **Processing:** The notebook will automatically **stream** the Hugging Face images and TMDB API data, clean the merged dataset **(filtering out $0 revenue entries)**, resize all posters to 224x224 pixels, adjust revenue for CPI inflation **(using the 2026 benchmark)**, and train the ResNet-50 models.
 6.  **Outputs:** All evaluation metrics, F1-scores, error comparisons (MAE/RMSE) against the dummy baseline, and generated figures will appear in the `OUTPUT` folder.
 
 ---
