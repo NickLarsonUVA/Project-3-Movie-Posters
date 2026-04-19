@@ -99,9 +99,9 @@ This repository contains all the code, raw data references, and output metrics r
 ---
 ## Instructions to Reproduce Results
 
-1.  **Download Local Datasets:** Download `raw_movie_data.csv` and the original CPI-U dataset, and place both files directly into the `DATA` folder.
+1.  **Download Local Datasets:** Download `movie_data_for_eda.csv` and the original CPI-U dataset, and place both files directly into the `DATA` folder.
 2.  **API and Cloud Data Setup:** You will need an active TMDB API key to fetch the supplementary movie metadata. The **poster image dataset is streamed dynamically from Hugging Face directly within the code, which evaluates and downloads exactly 10,000 valid images to a local `./posters` directory (~491MB footprint)**, so no manual downloading of the 42GB raw file is required.
-3.  **Environment Setup:** Due to the massive size of the image dataset, local processing is not feasible. You must connect to a high-performance computing environment (such as UVA's Rivanna HPC) and allocate GPU nodes. Open `plots.ipynb` (or the respective modeling notebook) within this environment. 
+3.  **Environment Setup:** Due to the massive size of the image dataset, local processing is not feasible. You must connect to a high-performance computing environment (such as UVA's Rivanna HPC) and allocate GPU nodes. Open `analysis.ipynb` (or the respective modeling notebook) within this environment. 
 4.  **Run Cells:** Run all notebook cells from top to bottom.
 5.  **Processing:** The notebook will automatically **stream** the Hugging Face images and TMDB API data, clean the merged dataset **(filtering out $0 revenue entries)**, resize all posters to 224x224 pixels, adjust revenue for CPI inflation **(using the 2026 benchmark)**, and train the ResNet-50 models.
 6.  **Outputs:** All evaluation metrics, F1-scores, error comparisons (MAE/RMSE) against the dummy baseline, and generated figures will appear in the `OUTPUT` folder.
