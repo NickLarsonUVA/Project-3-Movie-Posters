@@ -82,7 +82,21 @@ This project leverages **transfer learning** using the **ResNet-50** architectur
 * *Note: Deep learning libraries (e.g., PyTorch or TensorFlow) are required for ResNet-50 processing.*
 
 ---
+## Repository Contents & File Map
+This repository contains all the code, raw data references, and output metrics required to replicate our poster analysis study. Below is a map of the repository's folder and file structure:
 
+```text
+├── DATA/                     # Folder for raw and pre-processed data
+│   ├── movie_data_for_eda.csv    # Initial movie metadata
+│   └── Original CPI-U data.csv   # Consumer Price Index data
+├── OUTPUT/                   # Generated evaluation metrics and figures
+│   └── eda_plots.png             # Initial eda plots
+├── SCRIPTS/                  # Dynamically generated folder for image downloads
+│   └── plots.ipynb               # Main Jupyter notebook for exploratory data analysis
+│   └── analysis.ipynb      # Notebook containing the ResNet-50 modeling
+└── README.md                 # Project orientation and reproduction instructions
+```
+---
 ## Instructions to Reproduce Results
 
 1.  **Download Local Datasets:** Download `raw_movie_data.csv` and the original CPI-U dataset, and place both files directly into the `DATA` folder.
