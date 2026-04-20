@@ -94,9 +94,7 @@ This repository contains all the code, raw data references, and output metrics r
 ├── OUTPUT/                   # Generated evaluation metrics and figures
 │   └── eda_plots.png             # Initial eda plots
 │   └── Filtered Revenue Performance.png
-│   └── Genre Classification Accuracy.png
-│   └── Multi-Task Combined Loss.png
-│   └── Revenue Prediction Error.png
+│   └── Tests_Accuracies.png
 ├── SCRIPTS/                  # Dynamically generated folder for image downloads
 │   └── plots.ipynb               # Main Jupyter notebook for exploratory data analysis
 │   └── analysis.ipynb      # Notebook containing the ResNet-50 modeling
