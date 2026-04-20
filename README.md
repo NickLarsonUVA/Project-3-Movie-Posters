@@ -89,8 +89,14 @@ This repository contains all the code, raw data references, and output metrics r
 ├── DATA/                     # Folder for raw and pre-processed data
 │   ├── movie_data_for_eda.csv    # Initial movie metadata
 │   └── Original CPI-U data.csv   # Consumer Price Index data
+│   └── data_access_instructions.md # How to get data
+│   └── Data Appendix P3.pdf      # Data appendix
 ├── OUTPUT/                   # Generated evaluation metrics and figures
 │   └── eda_plots.png             # Initial eda plots
+│   └── Filtered Revenue Performance.png
+│   └── Genre Classification Accuracy.png
+│   └── Multi-Task Combined Loss.png
+│   └── Revenue Prediction Error.png
 ├── SCRIPTS/                  # Dynamically generated folder for image downloads
 │   └── plots.ipynb               # Main Jupyter notebook for exploratory data analysis
 │   └── analysis.ipynb      # Notebook containing the ResNet-50 modeling
